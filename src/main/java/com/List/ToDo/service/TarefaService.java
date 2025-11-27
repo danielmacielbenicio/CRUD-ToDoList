@@ -23,4 +23,26 @@ public class TarefaService {
 		Tarefa task = new Tarefa(dto);
 		tarefaRepository.save(task);
 	}
+	
+    public Tarefa buscarTarefaPorId(Long id) {
+        return tarefaRepository.findById(id).orElse(null);
+    }
+    
+    public void deletarTarefa(Long id) {
+        tarefaRepository.deleteById(id);
+    }
+    
+    public Tarefa atualizarTarefa(Long id, TarefaDTO dto) {
+
+        Tarefa tarefa = tarefaRepository.findById(id).orElse(null);
+
+        if (tarefa == null) {
+            return null;
+        }
+        tarefa.setNome(dto.getNome());
+        tarefa.setDescricao(dto.getDescricao());
+        tarefa.setStatus(dto.getStatus());
+        tarefa.setDtFim(dto.getDtFim());
+        return tarefaRepository.save(tarefa);
+    }
 }
